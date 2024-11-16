@@ -1,0 +1,6 @@
+@BCD.API_HostAddress = http://localhost:5207
+
+# GET {{BCD.API_HostAddress}}/users/
+# Accept: application/json
+
+###
