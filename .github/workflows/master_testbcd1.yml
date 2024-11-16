@@ -21,6 +21,9 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: clean nuget
+        run: dotnet nuget locals all --clear
+        
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
