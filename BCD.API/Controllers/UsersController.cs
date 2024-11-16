@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
     [HttpGet("GetUser")]
     public IActionResult GetUser()
     {
-        return Ok("thank you very much!: " + DateTime.Now.ToShortTimeString());
+        return Ok("thank you very much !!! => " + DateTime.Now.ToShortTimeString());
     }
 
     /// <summary>
