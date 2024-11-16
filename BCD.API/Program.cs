@@ -28,6 +28,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddHealthChecks();
 
+//builder.Configuration.AddAzureAppConfiguration("Endpoint=https://appconfigbcdapps.azconfig.io;Id=DcW7;Secret=G0rBrbtPsdIzGsA2WNEfZBjgY8DfCUBL7OA4DCBwSlf4Ezh3OIJqJQQJ99AKACi5YpzDmrurAAACAZAC2tHj");
+
 //// added Auth through JWT
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 //{

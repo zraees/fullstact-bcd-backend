@@ -11,11 +11,13 @@ public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly ILogger<UsersController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public UsersController(IUserService userService, ILogger<UsersController> logger)
+    public UsersController(IUserService userService, ILogger<UsersController> logger, IConfiguration configuration)
     {
         _userService = userService;
         _logger = logger;
+        _configuration = configuration;
     }
 
     [HttpPost("Authenticate")]
@@ -35,7 +37,7 @@ public class UsersController : ControllerBase
     [HttpGet("GetUser")]
     public IActionResult GetUser()
     {
-        return Ok("thank you very much !!! => " + DateTime.Now.ToShortTimeString());
+        return Ok("thank you very much !!! => " + DateTime.Now.ToShortTimeString() + " : " + _configuration.GetValue<string>("appSetting:DbName")); //"ConnectionStrings:BCDDbContext" 
     }
 
     /// <summary>

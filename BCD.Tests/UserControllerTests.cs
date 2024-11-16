@@ -5,6 +5,7 @@ using BCD.API.Controllers;
 using BCD.Domain.Entities;
 using BCD.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -14,13 +15,15 @@ public class UserControllerTests
 {
     private readonly Mock<IUserService> _userServiceMock;
     private readonly Mock<ILogger<UsersController>> _loggerMock;
+    private readonly Mock<IConfiguration> _configuration;
     private readonly UsersController _usersController;
 
     public UserControllerTests()
     {
         _userServiceMock = new Mock<IUserService>();
         _loggerMock = new Mock<ILogger<UsersController>>();
-        _usersController = new UsersController(_userServiceMock.Object, _loggerMock.Object);
+        _configuration = new Mock<IConfiguration>();
+        _usersController = new UsersController(_userServiceMock.Object, _loggerMock.Object, _configuration.Object);
     }
 
     [Fact]
