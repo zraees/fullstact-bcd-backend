@@ -4,6 +4,7 @@ using BCD.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BCD.Infrastructure.Migrations
 {
     [DbContext(typeof(BCDDbContext))]
-    partial class BCDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117070129_AddedUserTypeData")]
+    partial class AddedUserTypeData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,14 +272,6 @@ namespace BCD.Infrastructure.Migrations
                             CreatedBy = 1,
                             Description = "",
                             Name = "Grocery"
-                        },
-                        new
-                        {
-                            CategoryId = 7,
-                            CreatedAt = new DateTime(2024, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = 1,
-                            Description = "",
-                            Name = "Gym"
                         });
                 });
 

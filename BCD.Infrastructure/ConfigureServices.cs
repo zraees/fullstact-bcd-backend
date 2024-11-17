@@ -13,6 +13,21 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddDbContext<BCDDbContext>(opt =>
+        {
+            opt.UseSqlServer(configuration.GetConnectionString("BCDDbContext") ?? throw new InvalidOperationException("Connectionstring 'BCDDbContext' not found!"),
+                sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,            // Maximum number of retry attempts
+                        maxRetryDelay: TimeSpan.FromSeconds(30),  // Delay between retries
+                        errorNumbersToAdd: null       // Optional: specify SQL error numbers to retry on
+                    );
+                });
+
+            //opt.UseSqlite(builder.Configuration.GetConnectionString("BCDDbContext") ?? throw new InvalidOperationException("Connectionstring 'BCDDbContext' not found!"));
+        });
+
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();

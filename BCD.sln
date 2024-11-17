@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCD.API", "BCD.API\BCD.API.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCD.Tests", "BCD.Tests\BCD.Tests.csproj", "{27979831-312E-4D35-BCFC-FCE02BB86097}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCD.IntegrationTests", "BCD.IntegrationTests\BCD.IntegrationTests.csproj", "{194E1FCC-1CDF-431D-A3C0-33F3CD368D9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCD.IntegrationTests", "BCD.IntegrationTests\BCD.IntegrationTests.csproj", "{194E1FCC-1CDF-431D-A3C0-33F3CD368D9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCD.AzureFunc", "BCD.AzureFunc\BCD.AzureFunc.csproj", "{696974ED-4883-469A-A98F-9DF2BF336542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{194E1FCC-1CDF-431D-A3C0-33F3CD368D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{194E1FCC-1CDF-431D-A3C0-33F3CD368D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{194E1FCC-1CDF-431D-A3C0-33F3CD368D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{696974ED-4883-469A-A98F-9DF2BF336542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{696974ED-4883-469A-A98F-9DF2BF336542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{696974ED-4883-469A-A98F-9DF2BF336542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{696974ED-4883-469A-A98F-9DF2BF336542}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
