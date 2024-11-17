@@ -10,7 +10,6 @@ using BCD.Service.Business;
 using BCD.Service.Category;
 using BCD.Service.User;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

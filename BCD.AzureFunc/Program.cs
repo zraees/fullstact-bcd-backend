@@ -6,14 +6,16 @@ using BCD.Service.User;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BCD.Infrastructure;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
-    .ConfigureServices(services =>
+    .ConfigureServices((context, services) =>
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
 
+        services.AddInfrastructureServices(context.Configuration);
         services.AddScoped<IUserService, UserService>();
     })
     .Build();

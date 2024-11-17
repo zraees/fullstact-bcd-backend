@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCD.Tests", "BCD.Tests\BCD.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCD.IntegrationTests", "BCD.IntegrationTests\BCD.IntegrationTests.csproj", "{194E1FCC-1CDF-431D-A3C0-33F3CD368D9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCD.AzureFunc", "BCD.AzureFunc\BCD.AzureFunc.csproj", "{696974ED-4883-469A-A98F-9DF2BF336542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCD.AzureFunc", "BCD.AzureFunc\BCD.AzureFunc.csproj", "{696974ED-4883-469A-A98F-9DF2BF336542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
