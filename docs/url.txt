@@ -1,0 +1,6 @@
+frontend:
+https://deft-biscuit-82a2a1.netlify.app/
+
+api:
+https://bcdapi.azurewebsites.net
+
