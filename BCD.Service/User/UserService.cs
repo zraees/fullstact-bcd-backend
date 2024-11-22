@@ -32,6 +32,14 @@ public class UserService : IUserService
         return user;
     }
 
+    public async Task<Domain.Entities.User> Register(string username, string email, string pwd)
+    {
+        var user = new Domain.Entities.User() { Username = username, Email = email, PasswordHash = pwd, UserTypeId = 2, CreatedAt = DateTime.Now, CreatedBy = 1 };
+        await _unitOfWork.Users.AddAsync(user).ConfigureAwait(false);
+        await _unitOfWork.SaveAsync().ConfigureAwait(false);
+        return user;
+    }
+
     public async Task<IEnumerable<Domain.Entities.User>> GetUsersAsync()
     {
         return await _unitOfWork.Users.GetAllAsync().ConfigureAwait(false);

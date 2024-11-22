@@ -1,9 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using BCD.Domain.Entities;
+using BCD.Domain.DTOs;
 using BCD.Domain.Interfaces.Services;
-using BCD.Service.Business;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BCD.API.Controllers;
@@ -11,13 +10,27 @@ namespace BCD.API.Controllers;
 [ApiController]
 public class BusinessesController : ControllerBase
 {
-    private readonly IBusinessService _BusinessService;
+    private readonly IBusinessService _businessService;
     private readonly ILogger<BusinessesController> _logger;
 
     public BusinessesController(IBusinessService BusinessService, ILogger<BusinessesController> logger)
     {
-        _BusinessService = BusinessService;
+        _businessService = BusinessService;
         _logger = logger;
+    }
+
+    [HttpPost("AddReview")]
+    public async Task<IActionResult> AddReview(AddReviewDTO addReview)
+    {
+        var reivew = await _businessService.AddReview(addReview).ConfigureAwait(false);
+        if (reivew == null)
+        {
+            return BadRequest("Error while adding review!");
+        }
+        else
+        {
+            return Ok(reivew);
+        }
     }
 
     /// <summary>
@@ -28,7 +41,7 @@ public class BusinessesController : ControllerBase
     public async Task<IActionResult> GetAllBusinesses()
     {
         // get all Users through injected-service
-        var data = await _BusinessService.GetBusinessesAsync().ConfigureAwait(false);
+        var data = await _businessService.GetBusinessesAsync().ConfigureAwait(false);
 
         var result = data.Select(x => new
         {
@@ -85,7 +98,7 @@ public class BusinessesController : ControllerBase
     public async Task<IActionResult> GetFeatureBusinesses()
     {
         // get all Users through injected-service
-        var data = await _BusinessService.GetFeatureBusinessesAsync().ConfigureAwait(false);
+        var data = await _businessService.GetFeatureBusinessesAsync().ConfigureAwait(false);
 
         var result = data.Select(x => new
         {

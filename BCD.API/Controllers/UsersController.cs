@@ -34,6 +34,21 @@ public class UsersController : ControllerBase
         }
     }
 
+
+    [HttpPost("Register")]
+    public async Task<IActionResult> Register(string username, string email, string pwd)
+    {
+        var user = await _userService.Register(username, email, pwd).ConfigureAwait(false);
+        if (user == null)
+        {
+            return BadRequest("Error while creating user!");
+        }
+        else
+        {
+            return Ok(user);
+        }
+    }
+
     [HttpGet("GetUser")]
     public IActionResult GetUser()
     {

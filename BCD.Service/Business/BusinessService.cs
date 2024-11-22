@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using BCD.Domain.DTOs;
+using BCD.Domain.Entities;
 using BCD.Domain.Interfaces;
 using BCD.Domain.Interfaces.Services;
 
@@ -12,6 +14,30 @@ public class BusinessService : IBusinessService
     public BusinessService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+    }
+
+    public async Task<BusinessReview> AddReview(AddReviewDTO review)
+    {
+        var business = await _unitOfWork.Businesses.GetByIdAsync(review.businessId).ConfigureAwait(false);
+        if (business == null) {
+            return null;
+        }
+
+        var businessReview = new BusinessReview()
+        {
+            BusinessId = review.businessId,
+            UserId = review.userId,
+            Rating = review.rating,
+            Comment = review.comment,
+            CreatedAt = DateTime.Now,
+            CreatedBy = review.userId,
+        };
+
+        business.BusinessReviews.Add(businessReview);
+
+        await _unitOfWork.SaveAsync().ConfigureAwait(false);
+
+        return businessReview;
     }
 
     public async Task<IEnumerable<Domain.Entities.Business>> GetBusinessesAsync()
