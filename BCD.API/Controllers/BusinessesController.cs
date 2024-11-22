@@ -76,7 +76,7 @@ public class BusinessesController : ControllerBase
                 p.Rating,
                 p.Comment,
                 p.CreatedAt,
-                User = new { p.UserId }
+                User = new { p.UserId, p.User.Username }
             }),
         });
 

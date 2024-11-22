@@ -23,14 +23,14 @@ public class UsersController : ControllerBase
     [HttpPost("Authenticate")]
     public async Task<IActionResult> Authenticate(string email, string pwd)
     {
-        var user =await _userService.IsAuthenticated(email, pwd).ConfigureAwait(false);
+        var user = await _userService.IsAuthenticated(email, pwd).ConfigureAwait(false);
         if (user == null)
         {
             return BadRequest("Invalid user and password!");
         }
         else
         {
-            return Ok(user);
+            return Ok(new { user.UserId, user.Username, user.Email, user.UserTypeId, user.Token });
         }
     }
 
@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
         }
         else
         {
-            return Ok(user);
+            return Ok(new { user.UserId, user.Username, user.Email, user.UserTypeId, user.Token });
         }
     }
 

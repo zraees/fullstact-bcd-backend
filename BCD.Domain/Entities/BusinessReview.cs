@@ -16,5 +16,6 @@ public class BusinessReview
     public DateTime? UpdatedAt { get; set; }
     public int? UpdatedBy { get; set; }
 
+    public User User { get; set; }
     //public virtual Business Business { get; set; }
 }
