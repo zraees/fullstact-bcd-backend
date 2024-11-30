@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using BCD.Domain.Interfaces.Services;
-using BCD.Service.Category;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BCD.API.Controllers;

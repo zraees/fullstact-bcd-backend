@@ -17,6 +17,7 @@ public class UnitOfWork : IUnitOfWork
         Categories = new CategoryRepository(_context);
         Businesses = new BusinessRepository(_context);
         BusinessReviews = new BusinessReviewRepository(_context);
+        Cities = new CityRepository(_context);
         // Initialize other repositories here
     }
 
@@ -24,6 +25,7 @@ public class UnitOfWork : IUnitOfWork
     public ICategoryRepository Categories { get; private set; }
     public IBusinessRepository Businesses { get; private set; }
     public IBusinessReviewRepository BusinessReviews { get; private set; }
+    public ICityRepository Cities { get; private set; }
 
     public async Task<int> SaveAsync()
     {

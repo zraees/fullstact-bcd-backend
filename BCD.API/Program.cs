@@ -8,6 +8,7 @@ using BCD.Domain.Interfaces.Services;
 using BCD.Infrastructure;
 using BCD.Service.Business;
 using BCD.Service.Category;
+using BCD.Service.City;
 using BCD.Service.User;
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Serilog;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IBusinessReviewService, BusinessReviewService>();
+builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddHealthChecks();
 
 // to get App Configuration (Azure Resource to share conf b/w diff web apps)

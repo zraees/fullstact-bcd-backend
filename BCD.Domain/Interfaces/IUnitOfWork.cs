@@ -10,6 +10,7 @@ public interface IUnitOfWork : IDisposable
     ICategoryRepository Categories { get; }
     IBusinessRepository Businesses { get; }
     IBusinessReviewRepository BusinessReviews { get; }
+    ICityRepository Cities { get; }
     // Add other repositories here
 
     Task<int> SaveAsync();
