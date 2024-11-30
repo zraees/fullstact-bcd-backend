@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using BCD.Domain.DTOs;
+using BCD.Domain.Entities;
 using BCD.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,15 +56,16 @@ public class BusinessesController : ControllerBase
                 p.BusinessId,
                 p.Url
             }),
-            BusinessReviews = x.BusinessReviews?.Select(p => new
-            {
-                p.BusinessReviewId,
-                p.BusinessId,
-                p.Rating,
-                p.Comment,
-                p.CreatedAt,
-                User = new { p.UserId, p.User.Username }
-            }),
+            BusinessReviews = new List<BusinessReview>()
+            //x.BusinessReviews?.Select(p => new
+            //{
+            //    p.BusinessReviewId,
+            //    p.BusinessId,
+            //    p.Rating,
+            //    p.Comment,
+            //    p.CreatedAt,
+            //    User = new { p.UserId, p.User.Username }
+            //}),
         });
 
         return Ok(result);
@@ -112,15 +114,16 @@ public class BusinessesController : ControllerBase
                 p.BusinessId,
                 p.Url
             }),
-            BusinessReviews = x.BusinessReviews?.Select(p => new
-            {
-                p.BusinessReviewId,
-                p.BusinessId,
-                p.Rating,
-                p.Comment,
-                p.CreatedAt,
-                User = new { p.UserId }
-            })
+            BusinessReviews = new List<BusinessReview>()
+            //x.BusinessReviews?.Select(p => new
+            //{
+            //    p.BusinessReviewId,
+            //    p.BusinessId,
+            //    p.Rating,
+            //    p.Comment,
+            //    p.CreatedAt,
+            //    User = new { p.UserId }
+            //})
         });
 
         return Ok(result);
