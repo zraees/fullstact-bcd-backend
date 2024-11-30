@@ -45,4 +45,8 @@ public class BusinessReviewService : IBusinessReviewService
         return await _unitOfWork.BusinessReviews.GetAsync(x => x.BusinessId == businessId, "User").ConfigureAwait(false);
     }
 
+    public async Task<IEnumerable<BusinessReview>> GetReviewsByUserIdAsync(int userId)
+    {
+        return await _unitOfWork.BusinessReviews.GetAsync(x => x.UserId == userId, "User", "Business").ConfigureAwait(false);
+    }
 }

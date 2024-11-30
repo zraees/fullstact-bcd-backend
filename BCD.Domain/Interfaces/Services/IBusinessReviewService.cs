@@ -11,4 +11,5 @@ public interface IBusinessReviewService
 
     Task<IEnumerable<BusinessReview>> GetReviewsByBusinessIdAsync(int businessId);
 
+    Task<IEnumerable<BusinessReview>> GetReviewsByUserIdAsync(int userId);
 }
