@@ -9,6 +9,8 @@ public interface IBusinessReviewService
 {
     Task<BusinessReview> AddReview(AddReviewDTO review);
 
+    Task<IEnumerable<BusinessReview>> GetAllReviewsAsync();
+
     Task<IEnumerable<BusinessReview>> GetReviewsByBusinessIdAsync(int businessId);
 
     Task<IEnumerable<BusinessReview>> GetReviewsByUserIdAsync(int userId);

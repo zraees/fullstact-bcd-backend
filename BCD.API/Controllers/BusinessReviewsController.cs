@@ -33,6 +33,27 @@ public class BusinessReviewsController : ControllerBase
         }
     }
 
+    [HttpGet("GetAllReviewsAsync")]
+    public async Task<IActionResult> GetAllReviewsAsync()
+    {
+        // get all Users through injected-service
+        var data = await _businessReviewService.GetAllReviewsAsync().ConfigureAwait(false);
+
+        var result = data.OrderByDescending(x => x.CreatedAt).Select(p => new
+        {
+            p.BusinessReviewId,
+            p.BusinessId,
+            p.Rating,
+            p.Comment,
+            p.CreatedAt,
+            Business = new { p.Business.Name, p.Business.Address },
+            User = new { p.UserId, p.User.Username }
+        });
+
+        return Ok(result);
+    }
+
+
     [HttpGet("GetBusinessReviews/{businessId}")]
     public async Task<IActionResult> GetBusinessReviews(int businessId)
     {
@@ -51,7 +72,6 @@ public class BusinessReviewsController : ControllerBase
 
         return Ok(result);
     }
-
 
     [HttpGet("GetReviewsByUserIdAsync/{userId}")]
     public async Task<IActionResult> GetReviewsByUserIdAsync(int userId)

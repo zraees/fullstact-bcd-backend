@@ -40,6 +40,11 @@ public class BusinessReviewService : IBusinessReviewService
         return businessReview;
     }
 
+    public async Task<IEnumerable<BusinessReview>> GetAllReviewsAsync()
+    {
+        return await _unitOfWork.BusinessReviews.GetAllAsync("User", "Business").ConfigureAwait(false);
+    }
+
     public async Task<IEnumerable<BusinessReview>> GetReviewsByBusinessIdAsync(int businessId)
     {
         return await _unitOfWork.BusinessReviews.GetAsync(x => x.BusinessId == businessId, "User").ConfigureAwait(false);
