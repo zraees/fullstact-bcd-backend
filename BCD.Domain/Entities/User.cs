@@ -22,4 +22,6 @@ public class User
     public int? UpdatedBy { get; set; }
 
     public virtual UserType UserType { get; set; }
+
+    //public ICollection<BusinessReview> BusinessReviews { get; set; }
 }

@@ -16,16 +16,18 @@ public class UnitOfWork : IUnitOfWork
         Users = new UserRepository(_context);
         Categories = new CategoryRepository(_context);
         Businesses = new BusinessRepository(_context);
+        BusinessReviews = new BusinessReviewRepository(_context);
         // Initialize other repositories here
     }
 
     public IUserRepository Users { get; private set; }
     public ICategoryRepository Categories { get; private set; }
     public IBusinessRepository Businesses { get; private set; }
+    public IBusinessReviewRepository BusinessReviews { get; private set; }
 
     public async Task<int> SaveAsync()
     {
-        return await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync().ConfigureAwait(false);
     }
 
     public void Dispose()

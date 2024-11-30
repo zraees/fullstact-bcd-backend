@@ -9,6 +9,7 @@ public interface IUnitOfWork : IDisposable
     IUserRepository Users { get; }
     ICategoryRepository Categories { get; }
     IBusinessRepository Businesses { get; }
+    IBusinessReviewRepository BusinessReviews { get; }
     // Add other repositories here
 
     Task<int> SaveAsync();

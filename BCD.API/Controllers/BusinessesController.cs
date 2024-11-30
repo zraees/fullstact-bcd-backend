@@ -19,20 +19,6 @@ public class BusinessesController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("AddReview")]
-    public async Task<IActionResult> AddReview(AddReviewDTO addReview)
-    {
-        var reivew = await _businessService.AddReview(addReview).ConfigureAwait(false);
-        if (reivew == null)
-        {
-            return BadRequest("Error while adding review!");
-        }
-        else
-        {
-            return Ok(reivew);
-        }
-    }
-
     /// <summary>
     /// first endpoint: to bring all Businesses data from csv and return to client in json format
     /// </summary>

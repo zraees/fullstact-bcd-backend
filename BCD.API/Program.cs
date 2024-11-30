@@ -21,6 +21,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
+builder.Services.AddScoped<IBusinessReviewService, BusinessReviewService>();
 builder.Services.AddHealthChecks();
 
 // to get App Configuration (Azure Resource to share conf b/w diff web apps)

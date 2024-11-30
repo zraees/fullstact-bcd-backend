@@ -4,6 +4,7 @@
 using System.Linq.Expressions;
 using BCD.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BCD.Infrastructure.Repository;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
@@ -19,7 +20,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<IEnumerable<T>> GetAllAsync()
     {
-        return await _dbSet.ToListAsync();
+        return await _dbSet.AsNoTracking().ToListAsync().ConfigureAwait(false);
     }
 
     // Overload to accept navigation properties
@@ -32,7 +33,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = query.Include(navigationProperty);
         }
 
-        return await query.ToListAsync();
+        return await query.AsNoTracking().ToListAsync().ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate, params string[] navigationProperties)
@@ -45,12 +46,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = query.Include(navigationProperty);
         }
 
-        return await query.ToListAsync();
+        return await query.AsNoTracking().ToListAsync().ConfigureAwait(false);
     }
 
+    //public async Task<T> GetByIdAsync(int id)
+    //{ 
+    //    return await _dbSet.AsNoTracking().FindAsync(id);
+    //}
     public async Task<T> GetByIdAsync(int id)
     {
-        return await _dbSet.FindAsync(id);
+        var keyProperty = _dbSet.EntityType.FindPrimaryKey().Properties.First().Name;
+        return await _dbSet.AsNoTracking().FirstOrDefaultAsync(e => EF.Property<int>(e, keyProperty) == id).ConfigureAwait(false);
     }
 
     public async Task AddAsync(T entity)
