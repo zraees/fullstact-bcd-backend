@@ -8,8 +8,11 @@ public interface IBusinessService
 {
     Task<Business> AddAsync(Business business);
 
+    Task<Business> MarkAsFeatured(int businessId);
+
+    Task DeleteAsync(int businessId);
+
     Task<IEnumerable<Business>> GetBusinessesAsync();
-    //Task<int> CreateUserAsync(Business Business);
 
     Task<IEnumerable<Business>> GetFeatureBusinessesAsync();
 }

@@ -5,6 +5,7 @@ using BCD.API.Dtos;
 using BCD.Domain.Entities;
 using BCD.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BCD.API.Controllers;
 [Route("api/[controller]")]
@@ -168,5 +169,19 @@ public class BusinessesController : ControllerBase
         });
 
         return Ok(result);
+    }
+
+    [HttpPut("MarkAsFeatured/{businessId}")]
+    public async Task<IActionResult> MarkAsFeatured(int businessId)
+    {
+        var business = await _businessService.MarkAsFeatured(businessId).ConfigureAwait(false);
+        return Ok(business);
+    }
+
+    [HttpDelete("Delete/{businessId}")]
+    public async Task<IActionResult> Delete(int businessId)
+    {
+        await _businessService.DeleteAsync(businessId).ConfigureAwait(false);
+        return Ok();
     }
 }
