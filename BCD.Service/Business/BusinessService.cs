@@ -4,6 +4,7 @@
 using BCD.Domain.Interfaces;
 using BCD.Domain.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BCD.Service.Business;
 public class BusinessService : IBusinessService
@@ -64,5 +65,35 @@ public class BusinessService : IBusinessService
         await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
         return business;
+    }
+
+    public async Task<List<Domain.Entities.Business>> GetRecommendations(int userId)
+    {
+        // Fetch up to 3 recommended shops based on user remarks
+        var recommendedBusinesses = _unitOfWork.BusinessReviews.GetAsync(r => r.UserId == userId).Result
+            .Select(r => r.BusinessId)
+            .Take(3) // Limit to 3 shops
+            .ToList();
+
+        var businessRecommendations = _unitOfWork.Businesses.GetAsync(s => recommendedBusinesses.Contains(s.BusinessId),
+                                                                "BusinessPhotos", "Category", "City", "BusinessReviews.User").Result
+            .Take(3)
+            .ToList();
+
+        // Calculate how many slots are left for featured shops
+        int remainingSlots = 3 - (businessRecommendations?.Count ?? 0);
+
+        if (remainingSlots > 0)
+        {
+            // Fetch featured shops to fill remaining slots
+            var featuredShops = _unitOfWork.Businesses.GetAsync(s => s.IsFeatured && !recommendedBusinesses.Contains(s.BusinessId),
+                                                            "BusinessPhotos", "Category", "City", "BusinessReviews.User").Result
+                .Take(remainingSlots)
+                .ToList();
+
+            businessRecommendations.AddRange(featuredShops);
+        }
+
+        return businessRecommendations;
     }
 }

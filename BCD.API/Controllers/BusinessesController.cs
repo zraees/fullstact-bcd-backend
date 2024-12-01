@@ -6,6 +6,7 @@ using BCD.Domain.Entities;
 using BCD.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BCD.API.Controllers;
 [Route("api/[controller]")]
@@ -178,6 +179,52 @@ public class BusinessesController : ControllerBase
         var data = await _businessService.GetFeatureBusinessesAsync().ConfigureAwait(false);
 
         var result = data.Select(x => new
+        {
+            x.BusinessId,
+            x.Name,
+            x.Description,
+            x.Website,
+            x.Address,
+            x.Email,
+            x.HoursOfOperation,
+            x.PhoneNumber,
+            x.IsFeatured,
+            x.Latitude,
+            x.Longitude,
+            x.PostalCode,
+            City = new { x.CityID, x.City?.CityName },
+            Category = new
+            {
+                x.Category?.CategoryId,
+                x.Category?.Name
+            },
+            BusinessPhotos = x.BusinessPhotos?.Select(p => new
+            {
+                p.businessPhotoId,
+                p.BusinessId,
+                p.Url
+            }),
+            BusinessReviews = new List<BusinessReview>()
+            //x.BusinessReviews?.Select(p => new
+            //{
+            //    p.BusinessReviewId,
+            //    p.BusinessId,
+            //    p.Rating,
+            //    p.Comment,
+            //    p.CreatedAt,
+            //    User = new { p.UserId }
+            //})
+        });
+
+        return Ok(result);
+    }
+
+    [HttpGet("GetRecommendations/{userId}")]
+    public async Task<IActionResult> GetRecommendations(int userId)
+    {
+        var recommendations = await _businessService.GetRecommendations(userId).ConfigureAwait(false);
+
+        var result = recommendations.Select(x => new
         {
             x.BusinessId,
             x.Name,
