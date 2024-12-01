@@ -14,5 +14,7 @@ public interface IBusinessService
 
     Task<IEnumerable<Business>> GetBusinessesAsync();
 
+    Task<IEnumerable<Business>> GetBusinessesAsync(int categoryId, int cityId, string searchText);
+
     Task<IEnumerable<Business>> GetFeatureBusinessesAsync();
 }

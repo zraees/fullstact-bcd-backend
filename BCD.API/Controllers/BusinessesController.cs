@@ -73,6 +73,53 @@ public class BusinessesController : ControllerBase
         return Ok(new { message = "Business created successfully" });
     }
 
+    [HttpGet("GetBusinesses/{categoryId}/{cityId}/{searchText}")]
+    public async Task<IActionResult> GetBusinesses(int categoryId, int cityId, string searchText)
+    {
+        // get all Users through injected-service
+        var data = await _businessService.GetBusinessesAsync(categoryId, cityId, searchText).ConfigureAwait(false);
+
+        var result = data.Select(x => new
+        {
+            x.BusinessId,
+            x.Name,
+            x.Description,
+            x.Website,
+            x.Address,
+            x.Email,
+            x.HoursOfOperation,
+            x.PhoneNumber,
+            x.IsFeatured,
+            x.Latitude,
+            x.Longitude,
+            x.PostalCode,
+            City = new { x.CityID, x.City?.CityName },
+            Category = new
+            {
+                x.Category?.CategoryId,
+                x.Category?.Name
+            },
+            BusinessPhotos = x.BusinessPhotos?.Select(p => new
+            {
+                p.businessPhotoId,
+                p.BusinessId,
+                p.Url
+            }),
+            BusinessReviews = new List<BusinessReview>()
+            //x.BusinessReviews?.Select(p => new
+            //{
+            //    p.BusinessReviewId,
+            //    p.BusinessId,
+            //    p.Rating,
+            //    p.Comment,
+            //    p.CreatedAt,
+            //    User = new { p.UserId, p.User.Username }
+            //}),
+        });
+
+        return Ok(result);
+    }
+
     /// <summary>
     /// first endpoint: to bring all Businesses data from csv and return to client in json format
     /// </summary>

@@ -34,6 +34,16 @@ public class BusinessService : IBusinessService
         return await _unitOfWork.Businesses.GetAllAsync("BusinessPhotos", "Category", "City", "BusinessReviews.User").ConfigureAwait(false);
     }
 
+    public async Task<IEnumerable<Domain.Entities.Business>> GetBusinessesAsync(int categoryId, int cityId, string searchText)
+    {
+        searchText = searchText.Replace("-1", "").Trim();
+
+        return await _unitOfWork.Businesses.GetAsync(x => (cityId > 0 ? x.CityID == cityId : true)
+                                                    && (categoryId > 0 ? x.CategoryId == categoryId : true)
+                                                    && x.Description.Contains(searchText),
+                                                "BusinessPhotos", "Category", "City", "BusinessReviews.User").ConfigureAwait(false);
+    }
+
     public async Task<IEnumerable<Domain.Entities.Business>> GetFeatureBusinessesAsync()
     {
         return await _unitOfWork.Businesses.GetAsync(x => x.IsFeatured, "BusinessPhotos", "Category", "City", "BusinessReviews.User").ConfigureAwait(false);
