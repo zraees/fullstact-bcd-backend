@@ -6,6 +6,8 @@ using BCD.Domain.Entities;
 namespace BCD.Domain.Interfaces.Services;
 public interface IBusinessService
 {
+    Task<Business> AddAsync(Business business);
+
     Task<IEnumerable<Business>> GetBusinessesAsync();
     //Task<int> CreateUserAsync(Business Business);
 

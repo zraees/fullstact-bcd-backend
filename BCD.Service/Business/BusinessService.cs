@@ -16,6 +16,14 @@ public class BusinessService : IBusinessService
         _unitOfWork = unitOfWork;
     }
 
+    public async  Task<Domain.Entities.Business> AddAsync(Domain.Entities.Business business)
+    {
+        await _unitOfWork.Businesses.AddAsync(business).ConfigureAwait(false);
+        await _unitOfWork.SaveAsync().ConfigureAwait(false);
+
+        return business;
+    }
+
     public async Task<IEnumerable<Domain.Entities.Business>> GetBusinessesAsync()
     {
         return await _unitOfWork.Businesses.GetAllAsync("BusinessPhotos", "Category", "City", "BusinessReviews.User").ConfigureAwait(false);

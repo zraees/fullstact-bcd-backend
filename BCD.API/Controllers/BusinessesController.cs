@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using BCD.Domain.DTOs;
+using BCD.API.Dtos;
 using BCD.Domain.Entities;
 using BCD.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +13,63 @@ public class BusinessesController : ControllerBase
 {
     private readonly IBusinessService _businessService;
     private readonly ILogger<BusinessesController> _logger;
+    private readonly IWebHostEnvironment _environment;
 
-    public BusinessesController(IBusinessService BusinessService, ILogger<BusinessesController> logger)
+    public BusinessesController(IBusinessService BusinessService, ILogger<BusinessesController> logger, IWebHostEnvironment environment)
     {
         _businessService = BusinessService;
         _logger = logger;
+        _environment = environment;
+    }
+
+    [HttpPost("Add")]
+    public async Task<IActionResult> CreateBusiness([FromForm] BusinessCreateDto businessDto)
+    {
+        // Save Business data
+        var business = new Business
+        {
+            Name = businessDto.Name,
+            Description = businessDto.Description,
+            Address = businessDto.Address,
+            PhoneNumber = businessDto.PhoneNumber,
+            Email = businessDto.Email,
+            Website = businessDto.Website,
+            HoursOfOperation = businessDto.HoursOfOperation,
+            CategoryId = businessDto.CategoryId,
+            OwnerId = 1,//businessDto.OwnerId,
+            IsFeatured = businessDto.IsFeatured,
+            Latitude = businessDto.Latitude,
+            Longitude = businessDto.Longitude,
+            PostalCode = businessDto.PostalCode,
+            CityID = businessDto.CityID
+        };
+
+        // Save Images
+        var businessPhotos = new List<BusinessPhoto>();
+        if (businessDto.Images != null && businessDto.Images.Count > 0)
+        {
+            foreach (var image in businessDto.Images)
+            {
+                var businessPhoto = new BusinessPhoto();
+                businessPhoto.FileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+                businessPhoto.stream = image.OpenReadStream();
+                businessPhoto.ContentType = image.ContentType;
+
+                businessPhoto.Description = image.FileName;
+                businessPhoto.UpdatedAt = DateTime.Now;
+                businessPhoto.CreatedAt = DateTime.Now;
+                businessPhoto.CreatedBy = 1;
+                businessPhoto.UpdatedBy = 1;
+
+                businessPhotos.Add(businessPhoto);
+            }
+        }
+
+        business.BusinessPhotos = businessPhotos;
+        await _businessService.AddAsync(business).ConfigureAwait(false);
+
+        //await transaction.CommitAsync();
+        return Ok(new { message = "Business created successfully" });
     }
 
     /// <summary>
@@ -69,17 +121,6 @@ public class BusinessesController : ControllerBase
         });
 
         return Ok(result);
-
-        //// if return with sucess, show User data to client other wise badreqeust with error message.
-        //if (Users.IsSuccess)
-        //{
-        //    return Ok(Users.Value);
-        //}
-        //else
-        //{
-        //    _logger.LogError(Users.Error);
-        //    return BadRequest(Users.Error);
-        //}
     }
 
     [HttpGet("GetFeatureBusinesses")]

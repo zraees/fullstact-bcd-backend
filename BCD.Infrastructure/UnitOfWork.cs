@@ -4,18 +4,19 @@
 using BCD.Domain.Interfaces;
 using BCD.Domain.Interfaces.Repositories;
 using BCD.Infrastructure.Repository;
+using Microsoft.Extensions.Configuration;
 
 namespace BCD.Infrastructure;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly BCDDbContext _context;
 
-    public UnitOfWork(BCDDbContext context)
+    public UnitOfWork(BCDDbContext context, IConfiguration configuration)
     {
         _context = context;
         Users = new UserRepository(_context);
         Categories = new CategoryRepository(_context);
-        Businesses = new BusinessRepository(_context);
+        Businesses = new BusinessRepository(_context, configuration);
         BusinessReviews = new BusinessReviewRepository(_context);
         Cities = new CityRepository(_context);
         // Initialize other repositories here

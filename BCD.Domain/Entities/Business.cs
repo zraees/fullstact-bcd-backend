@@ -15,7 +15,7 @@ public class Business
     public string Website { get; set; }
     public string HoursOfOperation { get; set; } // JSON as string
     public int CategoryId { get; set; }
-    public int OwnerId { get; set; }
+    public int OwnerId { get; set; } = 1;
     public bool IsFeatured { get; set; }
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
